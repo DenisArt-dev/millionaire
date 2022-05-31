@@ -1,0 +1,92 @@
+@import "~normalize.css";
+@import "./var.scss";
+@import "./mixin.scss";
+
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    background-image: url(../assets/background_2.png),
+        url(../assets/background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 250px, cover;
+    background-attachment: fixed;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+
+.container {
+    max-width: 1180px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+.whiteText {
+    color: $clW;
+}
+
+.blackText {
+    color: $clB;
+}
+
+.title {
+    text-align: center;
+    font-weight: 400;
+}
+
+
+.header {
+
+    background-color: $cl1;
+    color: $clW;
+    width: 100%;
+
+    ul {
+        display: flex;
+        // justify-content: space-between;
+    }
+
+    li {
+        // flex-grow: 1;
+        text-align: center;
+        padding: 10px 20px;
+
+        &:hover {
+            background-color: $cl2;
+        }
+
+    }
+
+}
+
+.startScreen {
+
+    &__hexagon {
+
+        .hexagon {
+            margin: 50px auto;
+        }
+        
+        @include hexagon (100px, 55px, 25px, 0);
+    }
+
+}
+
