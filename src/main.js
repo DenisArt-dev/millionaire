@@ -7,6 +7,7 @@ import { createStore } from 'vuex';
 
 import cmpHeader from './components/cmpHeader.vue';
 import cmpPopUp from './components/cmpPopUp.vue';
+import cmpButton from './components/cmpButton.vue';
 import pageGame from './components/pageGame.vue';
 import pageStart from './components/pageStart.vue';
 
@@ -35,7 +36,20 @@ const vuex = createStore({
             name: null,
             category: null,
             balance: 0,
-            questionNumber: 0
+            questionNumber: 0,
+            colors: [],
+        }
+    },
+
+    mutations: {
+        setColors (state) {
+
+            let colorsChild = document.querySelector('.colors').children;
+
+            for(let i = 0; i < colorsChild.length; i++) {
+                state.colors.push(getComputedStyle(colorsChild[i]).backgroundColor);
+            }
+            
         }
     }
 });
@@ -47,6 +61,7 @@ app.use(vuex);
 
 app.component('cmp-header', cmpHeader);
 app.component('cmp-pop-up', cmpPopUp);
+app.component('cmp-button', cmpButton);
 
 app.mount('#app');
 

@@ -36,6 +36,49 @@
 
 }
 
-@mixin name {
-    
+@mixin button ($width, $height:30px) {
+
+    display: flex;
+
+
+    @if ($height != 30px) {
+        height: $height;
+    }
+
+    .button__left, .button__right {
+        width: 0; 
+        height: 0;
+        border-top: ($height / 2) solid transparent;
+        border-bottom: ($height / 2) solid transparent;
+        cursor: pointer;
+        transition: all $transition;
+    }
+
+    .button__left {
+        border-right: 15px solid $cl1;
+    }
+
+    .button__right {
+        border-left: 15px solid $cl1;
+    }
+
+    .button__center {
+
+        @if($width != 'null') {
+            width: $width;
+            padding: 3px auto;
+        }
+        @else {
+            padding: 3px 20px;
+        }
+
+        background-color: $cl1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all $transition;
+        border: none;
+    }
+
 }

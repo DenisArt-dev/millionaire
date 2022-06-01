@@ -32,6 +32,38 @@ p {
     padding: 0;
 }
 
+input {
+    outline: none;
+}
+
+
+.colors {
+
+    &__1 {
+        background-color: $cl1;
+    }
+
+    &__2 {
+        background-color: $cl2;
+    }
+
+    &__3 {
+        background-color: $cl3;
+    }
+
+    &__4 {
+        background-color: $cl4;
+    }
+
+    &__W {
+        background-color: $clW;
+    }
+
+    &__B {
+        background-color: $clB;
+    }
+
+}
 
 .container {
     max-width: 1180px;
@@ -52,6 +84,53 @@ p {
     font-weight: 400;
 }
 
+.popup {
+
+    background-color: $clW;
+    box-shadow: $shadow;
+    text-align: center;
+    max-width: 500px;
+    position: absolute;
+    padding: 0 40px;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, -50%);
+
+    &__title {
+        font-weight: 300;
+    }
+
+    &__input {
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: 1px solid;
+    }
+
+    &__button {
+
+        @include button (150px);
+
+    }
+
+    &__buttonsFX {
+        display: flex;
+        justify-content: space-around;
+        padding: 20px 0;
+    }
+
+    &__buttonsBL {
+
+        padding: 10px 0;
+
+        .button {
+            margin: 10px 0;
+            justify-content: center;
+        }
+
+    }
+
+}
+
 
 .header {
 
@@ -61,18 +140,16 @@ p {
 
     ul {
         display: flex;
-        // justify-content: space-between;
     }
 
     li {
-        // flex-grow: 1;
         text-align: center;
         padding: 10px 20px;
+        transition: all $transition;
 
         &:hover {
             background-color: $cl2;
         }
-
     }
 
 }
@@ -88,5 +165,9 @@ p {
         @include hexagon (100px, 55px, 25px, 0);
     }
 
+}
+
+.popup__setName {
+    max-width: 400px;
 }
 
