@@ -30,6 +30,7 @@ body {
 p {
     margin: 0;
     padding: 0;
+    font-weight: 300;
 }
 
 input {
@@ -61,6 +62,10 @@ input {
 
     &__B {
         background-color: $clB;
+    }
+
+    &__R {
+        background-color: $clR;
     }
 
 }
@@ -106,9 +111,16 @@ input {
         border: 1px solid;
     }
 
+    &__inputErr {
+        border-color: $clR;
+        &::placeholder {
+            color: $clR;
+        }
+    }
+
     &__button {
 
-        @include button (150px);
+        @include button (200px);
 
     }
 

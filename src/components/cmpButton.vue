@@ -3,6 +3,7 @@
         <div class="button__left"></div>
         <button @pointerover="hover"
                 @pointerout="hover"
+                @click="clickF"
                 class="button__center"><p class="whiteText">{{inner}}</p></button>
         <div class="button__right"></div>
     </div>
@@ -12,7 +13,7 @@
 
     export default {
 
-        props: ['inner'],
+        props: ['inner', 'clickF'],
 
         data () {
             return {    
@@ -24,8 +25,6 @@
             hover(ev) {
 
                 let target = ev.target;
-
-                console.log(ev.target.tagName);
 
                 if (ev.target.tagName !== 'BUTTON' && ev.target.parentElement.tagName === 'BUTTON') target = ev.target.parentElement;
 

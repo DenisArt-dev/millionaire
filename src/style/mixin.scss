@@ -56,10 +56,12 @@
 
     .button__left {
         border-right: 15px solid $cl1;
+        margin-right: -1px;
     }
 
     .button__right {
         border-left: 15px solid $cl1;
+        margin-left: -1px;
     }
 
     .button__center {
@@ -79,6 +81,7 @@
         cursor: pointer;
         transition: all $transition;
         border: none;
+        border-radius: 3px;
     }
 
 }

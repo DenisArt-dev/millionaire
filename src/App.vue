@@ -7,6 +7,7 @@
     <span class="colors__4"></span>
     <span class="colors__W"></span>
     <span class="colors__B"></span>
+    <span class="colors__R"></span>
   </span>
 
   <cmp-header></cmp-header>
@@ -28,6 +29,7 @@ export default {
 
   mounted () {
     this.$store.commit('setColors');
+    this.$store.commit('setCategory');
   }
 }
 

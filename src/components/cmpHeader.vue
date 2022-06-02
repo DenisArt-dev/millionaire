@@ -3,8 +3,8 @@
         <div class="container">
           <nav>
             <ul>
-              <router-link v-for:="item in hederMenu" to="/game">
-                <li><p class="whiteText">{{item}}</p></li>
+              <router-link v-for:="item in hederMenu" :to="item.link" @click="item.hendler">
+                <li><p class="whiteText">{{item.text}}</p></li>
               </router-link>
             </ul>
           </nav>
@@ -18,8 +18,24 @@ export default {
     data() {
         return {
             hederMenu: [
-                'Новая игра',
-                'Создать свои вопросы',
+                {
+                  text: 'Главная',
+                  link: '/',
+                  hendler: null
+                },
+                {
+                  text: 'Новая игра',
+                  link: '/new',
+                  hendler: () => {
+                    this.$store.commit('resetAll');
+                    console.log(this.$store);
+                  }
+                },
+                {
+                  text: 'Создать свои вопросы',
+                  link: '/',
+                  hendler: null
+                }
             ],
         }
     }
