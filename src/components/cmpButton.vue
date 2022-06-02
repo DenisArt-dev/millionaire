@@ -4,7 +4,7 @@
         <button @pointerover="hover"
                 @pointerout="hover"
                 @click="clickF"
-                class="button__center"><p class="whiteText">{{inner}}</p></button>
+                class="button__center"> <h3 class="button__lable" v-if="lable">{{lable}}</h3> <p class="whiteText">{{inner}}</p></button>
         <div class="button__right"></div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 
     export default {
 
-        props: ['inner', 'clickF'],
+        props: ['inner', 'clickF', 'hoverSW', 'lable'],
 
         data () {
             return {    
@@ -23,6 +23,8 @@
 
         methods: {
             hover(ev) {
+
+                if (!this.hoverSW) return null;
 
                 let target = ev.target;
 
@@ -39,7 +41,12 @@
                 }
 
             }
-        }
+        },
+        // computed: {
+        //     setInner() {
+
+        //     }
+        // }
     }
 
 </script>

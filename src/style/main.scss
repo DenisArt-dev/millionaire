@@ -183,3 +183,88 @@ input {
     max-width: 400px;
 }
 
+
+
+.game {
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 35px;
+    }
+
+    &__helpItem {
+
+        margin-top: 50px;
+        @include hexagon (60px, 30px, 18px, 0);
+
+        p {
+            font-weight: 600;
+        }
+
+        svg {
+            fill: $clW;
+        }
+    } 
+    
+    &__picture {
+        margin-top: 35px;
+        background-color: $clW;
+        box-shadow: $shadow;
+        width: 345px;
+        height: 234px;
+    }
+
+    &__info {
+        margin-top: 35px;
+        background-color: $cl1;
+        box-shadow: $shadow;
+        width: 345px;
+        height: 234px;
+    }
+
+    &__question {
+
+        margin-bottom: 20px;
+
+        div {
+            margin: auto;
+            @include button ($widthContainer2, '', 75px, 30px);
+            position: relative;
+            .button__center {
+                p {
+                    margin: 10px;
+                };
+            }
+
+        }
+
+    }
+
+    &__answers {
+
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: $widthContainer2 + 60px + 20px;
+        margin: auto;
+
+        .button {
+            @include button (300px, pointer, 50px, 25px);
+            margin: 10px;
+
+            .button__center {
+                justify-content: start;
+
+                p {
+                    text-align: left;
+                }
+
+            }
+
+        }
+
+    }    
+
+}
+

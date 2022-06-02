@@ -36,7 +36,7 @@
 
 }
 
-@mixin button ($width, $height:30px) {
+@mixin button ($width, $cursor:pointer, $height:30px, $tip:15px) {
 
     display: flex;
 
@@ -50,17 +50,17 @@
         height: 0;
         border-top: ($height / 2) solid transparent;
         border-bottom: ($height / 2) solid transparent;
-        cursor: pointer;
+        cursor: $cursor;
         transition: all $transition;
     }
 
     .button__left {
-        border-right: 15px solid $cl1;
+        border-right: $tip solid $cl1;
         margin-right: -1px;
     }
 
     .button__right {
-        border-left: 15px solid $cl1;
+        border-left: $tip solid $cl1;
         margin-left: -1px;
     }
 
@@ -78,10 +78,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
+        cursor: $cursor;
         transition: all $transition;
         border: none;
         border-radius: 3px;
+    }
+
+    .button__lable {
+        margin-right: 10px;
+        color: $clW;
+        font-weight: 300;
+        border: 1px solid $clW;
+        min-width: 30px;
+        min-height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
 }

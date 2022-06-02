@@ -7,7 +7,7 @@
                type="text" placeholder="Ваше имя"
                @input="$store.state.nameIsSet = false">
         <div class="popup__buttonsFX">
-            <cmp-button class="popup__button" inner="Начать" :clickF="clickFName"></cmp-button>
+            <cmp-button class="popup__button" inner="Начать" :clickF="clickFName" :hoverSW="true"></cmp-button>
         </div>
     </div>
 
@@ -15,7 +15,7 @@
         <h2 class="popup__title">Категория вопросов:</h2>
         <div class="popup__buttonsBL">
             <router-link v-for:="item in $store.state.category" to="/game">
-                <cmp-button class="popup__button" :inner="item" :clickF="clickFCategory"></cmp-button>
+                <cmp-button class="popup__button" :inner="item" :clickF="clickFCategory" :hoverSW="true"></cmp-button>
             </router-link>
         </div>
     </div>
