@@ -39,7 +39,7 @@
                     <cmp-button :inner="setQuestion"></cmp-button>
                 </div>
                 <div class="game__answers">
-                    <cmp-button v-for:="(item, i) in ansvers" :inner="item" :hoverSW="true" :lable="abcd[i]"></cmp-button>
+                    <cmp-button v-for:="(item, i) in setArrAnswers" :inner="item" :hoverSW="true" :lable="abcd[i]"></cmp-button>
                 </div>
 
             </div>
@@ -56,19 +56,53 @@
 
         data() {
             return {
-                question: null,
-                ansvers: ['ответ1 fgfh gfjgfj g sdfgsdfg dfgf g dfg ыва ы фыва ыв фыва вав', 'ответ2', 'ответ3', 'ответ4'],
-                abcd: ['A', 'B', 'C', 'D']
+                abcd: ['A', 'B', 'C', 'D'],
+                dataBase: this.parseDataBase(),
+                ansvers: [],
             }
-        }, 
+        },
+        
+        methods: {
+            parseDataBase () {
+
+                let arr = [];
+
+                for (let i = 0; i < this.$store.state.dataBase.blocks.length; i++) {
+                    if (this.$store.state.dataBase.blocks[i].title == this.$store.state.choseCategory) {
+
+                        for(let key in this.$store.state.dataBase.blocks[i].content) {
+                            for (let y = 0; y < this.$store.state.dataBase.blocks[i].content[key].length; y++) {
+                                arr.push(this.$store.state.dataBase.blocks[i].content[key][y]);
+                            }
+                        }
+                        
+                    }
+                }
+
+                return arr;
+
+            },
+
+        },
 
         computed: {
+
             setQuestion() {
+                return this.dataBase[this.$store.state.questionNumber].question;
+            },
 
-                
+            setArrAnswers () {
 
-                return '';
-            } 
+                let arr = [];
+
+                for (let key in this.dataBase[this.$store.state.questionNumber].answers) {
+                    arr.push(this.dataBase[this.$store.state.questionNumber].answers[key]);
+                } 
+
+                return arr;
+
+            }
+
         }
 
     }
