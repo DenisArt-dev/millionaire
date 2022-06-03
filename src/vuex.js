@@ -5,12 +5,12 @@ export default createStore({
 
     state() {
         return {
-            name: null, //
+            name: null, 
             nameIsSet: false, 
             category: [], 
-            choseCategory: null, //
-            balance: 0, //
-            questionNumber: 0, //
+            choseCategory: null, 
+            balance: 0, 
+            questionNumber: 0, 
             colors: [],
             dataBase: dataBase,
             parseDataBase: null,
@@ -21,19 +21,12 @@ export default createStore({
 
         parseDataBaseF (state) {
 
-            console.log(state.parseDataBase, 'll');
-
             if (state.parseDataBase) return;
 
             let arr = [];
 
-            console.log(state.dataBase.blocks, '00');
-            console.log(state.choseCategory, 'cc');
-
             for (let i = 0; i < state.dataBase.blocks.length; i++) {
                 if (state.dataBase.blocks[i].title == state.choseCategory) {
-
-                    console.log('done');
 
                     for(let key in state.dataBase.blocks[i].content) {
                         for (let y = 0; y < state.dataBase.blocks[i].content[key].length; y++) {

@@ -57,16 +57,8 @@
         data() {
             return {
                 abcd: ['A', 'B', 'C', 'D'],
-                // dataBase: this.parseDataBase(),
             }
         },
-        
-        // methods: {
-        //     parseDataBase () {
-
-        //     },
-
-        // },
 
         computed: {
 
@@ -92,10 +84,6 @@
         created () {
             this.$store.commit('getSaveData');
         },
-
-        // mounted () {
-
-        // }
 
     }
 
