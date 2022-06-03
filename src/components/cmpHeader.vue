@@ -15,28 +15,49 @@
 <script>
 
 export default {
+
     data() {
         return {
-            hederMenu: [
-                {
-                  text: 'Главная',
-                  link: '/',
-                  hendler: null
-                },
-                {
-                  text: 'Новая игра',
-                  link: '/new',
-                  hendler: () => {
-                    this.$store.commit('resetAll');
-                  }
-                },
-                {
-                  text: 'Создать свои вопросы',
-                  link: '/',
-                  hendler: null
-                }
-            ],
+            hederMenu: this.setMenu(),
         }
+    },
+
+    methods: {
+      
+      setMenu () {
+
+        let arr = [
+          {
+            text: 'Главная',
+            link: '/',
+            hendler: null
+          },
+          {
+            text: 'Новая игра',
+            link: '/new',
+            hendler: () => {
+              this.$store.commit('resetAll');
+            }
+          },
+          {
+            text: 'Создать свои вопросы',
+            link: '/',
+            hendler: null
+          }
+        ];
+
+        if (localStorage.length > 0) {
+          arr.push({
+            text: 'Продолжить игру',
+            link: '/game',
+            hendler: null
+          });
+        }
+
+        return arr;
+
+      }
+
     }
 }
 

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import dataBase from './dataBase.json';
+import dataBase from './dataBase/dataBase.json';
 
 export default createStore({
 
@@ -9,11 +9,11 @@ export default createStore({
             nameIsSet: false, 
             category: [], 
             choseCategory: null, 
-            balance: 0, 
             questionNumber: 0, 
             colors: [],
             dataBase: dataBase,
             parseDataBase: null,
+            atStake: [0, 100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 255000, 500000, 1000000],
         }
     },
 
@@ -74,7 +74,6 @@ export default createStore({
             state.name = null;
             state.choseCategory = null;
             state.nameIsSet = false;
-            state.balance = 0;
             state.questionNumber = 0;
         },
 
@@ -92,17 +91,27 @@ export default createStore({
 
                 window.onunload = () => {
 
-                    let obj = {};
+                    this.commit('updateLSDB');
 
-                    for (let key in state) {
-                        obj[key] = state[key];
-                    }
-
-                    localStorage.setItem('userData', JSON.stringify(obj));
                 };
 
             }
 
+        },
+
+        updateLSDB (state) {
+            let obj = {};
+
+            for (let key in state) {
+                obj[key] = state[key];
+            }
+
+            localStorage.setItem('userData', JSON.stringify(obj));
+        },
+
+        nextQuestion (state) {
+            state.questionNumber++;
         }
+
     }
 });

@@ -2,6 +2,17 @@
 
     <section class="game">
 
+        <div v-if="pause" class="popup popup__continue">
+            <h2 class="popup__title">Продолжить?</h2>
+            <p>
+                Ваш выигрыш: <b>{{$store.state.atStake[$store.state.questionNumber + 1] + currency}}</b>
+            </p>
+            <div class="popup__buttonsFX">
+                <cmp-button inner="Продолжить" :clickF="buttonGoOnF" :hoverSW="true"></cmp-button>
+                <cmp-button inner="Закончить" :clickF="buttonEndF" :hoverSW="true"></cmp-button>
+            </div>
+        </div>
+
         <div class="container">
 
             <div class="game__content">
@@ -25,8 +36,9 @@
                         <div><p class="whiteText">50:50</p></div>
                     </div>
                 </div>
-                <div class="game__picture">
-
+                <div v-if="setImg" class="game__picture">
+                    <img :src="setImg" alt="">
+                    <canvas class="canvas" height="350" width="500" id="canvas"></canvas>
                 </div>
                 <div class="game__info">
                     <div class="game__infoBlock">
@@ -36,7 +48,7 @@
                     <hr>
                     <div class="game__infoBlock">
                         <h3 class="whiteText">Баланс:</h3>
-                        <p class="whiteText">{{$store.state.balance + currency}}</p>
+                        <p class="whiteText">{{$store.state.atStake[$store.state.questionNumber] + currency}}</p>
                     </div>
                     <hr>
                     <div class="game__infoBlock">
@@ -46,7 +58,7 @@
                     <hr>
                     <div class="game__infoBlock">
                         <h3 class="whiteText">На кону:</h3>
-                        <p class="whiteText">{{atStake[$store.state.questionNumber] + currency}}</p>
+                        <p class="whiteText">{{$store.state.atStake[$store.state.questionNumber + 1] + currency}}</p>
                     </div>
                 </div>
             </div>
@@ -57,7 +69,11 @@
                     <cmp-button :inner="setQuestion"></cmp-button>
                 </div>
                 <div class="game__answers">
-                    <cmp-button v-for:="(item, i) in setArrAnswers" :inner="item" :hoverSW="true" :lable="abcd[i]"></cmp-button>
+                    <cmp-button v-for:="(item, i) in setArrAnswers"
+                                :inner="item"
+                                :hoverSW="hoverSW"
+                                :lable="abcd[i]"
+                                :clickF="clickABCD"></cmp-button>
                 </div>
 
             </div>
@@ -76,14 +92,98 @@
             return {
                 abcd: ['A', 'B', 'C', 'D'],
                 currency: '',
-                atStake: [100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 255000, 500000, 1000000],
+                hoverSW: true,
+                delay: 1000,
+                gameOver: false,
+                pause: false,
+                clickABCD: this.clickF,
             }
+        },
+
+        methods: {
+            clickF (ev) {
+                let answer = ev.target;
+                let button;
+                if (answer.tagName != 'H3') {
+
+                    if (answer.tagName == 'P') {
+                        button = answer.parentElement;
+                        answer = answer.parentElement.firstElementChild.textContent;
+                    }
+                    else {
+                        button = answer;
+                        answer = answer.firstElementChild.textContent;
+                    }
+
+                } else {
+                    button = answer.parentElement;
+                    answer = ev.target.textContent;
+                }
+
+                this.hoverSW = false;
+                this.clickABCD = null;
+
+                setTimeout( () => {
+
+                    if (answer === this.$store.state.parseDataBase[this.$store.state.questionNumber].right) {
+                        this.setColorToButton(button, this.$store.state.colors[2]);
+                    } else {
+                        this.setColorToButton(button, this.$store.state.colors[3]);
+                        this.gameOver = true;
+                    }
+
+                    setTimeout( () => {
+
+                        if (this.gameOver) {
+                            alert('Игра окончена!');
+                        } else {
+
+                            this.pause = true;
+
+                        }
+
+                    }, this.delay * 1.5 );
+
+                }, this.delay );
+
+            }, 
+
+            setColorToButton (button, color) {
+                button.style.backgroundColor = color;
+                button.nextElementSibling.style.borderLeftColor = color;
+                button.previousElementSibling.style.borderRightColor = color;
+            },
+
+            buttonGoOnF () {
+
+                this.pause = false;
+
+                this.$store.commit('nextQuestion');
+                this.$store.commit('updateLSDB');
+
+                let allButtons = document.querySelectorAll('.button button');
+
+                for (let i = 0; i < allButtons.length; i++) {
+                    this.setColorToButton(allButtons[i], this.$store.state.colors[0]);
+                }
+
+                this.hoverSW = true;
+                this.clickABCD = this.clickF;
+
+            },
+
+            buttonEndF () {
+
+                this.pause = false;
+                //...
+
+            },
+
         },
 
         computed: {
 
             setQuestion() {
-                console.log(this.$store.state.parseDataBase, '++');
                 return this.$store.state.parseDataBase[this.$store.state.questionNumber].question;
             },
 
@@ -97,6 +197,35 @@
 
                 return arr;
 
+            },
+
+            setImg () {
+                // console.log(this.$store.state.parseDataBase[this.$store.state.questionNumber].img);
+
+                if (this.$store.state.parseDataBase[this.$store.state.questionNumber].img) {
+
+                    let data = this.$store.state.parseDataBase[this.$store.state.questionNumber].img.data;
+
+                    let reader = new FileReader();
+
+                    let blob = new Blob(data);
+
+                    let canvas = document.querySelector('.canvas');
+                    let ctx = canvas.getContext('2d');
+
+                    console.log(canvas);
+
+                    reader.readAsDataURL(blob);
+
+                    reader.onload = () => {
+                        ctx.drawImage(reader.result);
+                        // console.log(reader.result);
+                        // return reader.result;
+                    }
+
+                }
+
+                return this.$store.state.parseDataBase[this.$store.state.questionNumber].img;
             }
 
         },
