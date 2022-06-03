@@ -33,6 +33,21 @@ p {
     font-weight: 300;
 }
 
+h1 {
+    font-size: $h1Fz;
+    font-weight: 300;
+}
+
+h2 {
+    font-size: $h2Fz;
+    font-weight: 300;
+}
+
+h3 {
+    font-size: $h3Fz;
+    font-weight: 300;
+}
+
 input {
     outline: none;
 }
@@ -211,16 +226,36 @@ input {
         margin-top: 35px;
         background-color: $clW;
         box-shadow: $shadow;
-        width: 345px;
-        height: 234px;
     }
 
     &__info {
         margin-top: 35px;
         background-color: $cl1;
         box-shadow: $shadow;
-        width: 345px;
-        height: 234px;
+        padding: 15px;
+    }
+
+    &__infoBlock {
+
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0 15px;
+
+        .game__infoName {
+            font-style: italic;
+        }
+
+        p {
+            font-weight: 600;
+            font-size: $h3Fz;
+        }
+
+        h3 {
+            margin: 10px;
+            margin-right: 20px;
+        }
+
     }
 
     &__question {

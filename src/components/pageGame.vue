@@ -29,7 +29,25 @@
 
                 </div>
                 <div class="game__info">
-
+                    <div class="game__infoBlock">
+                        <h3 class="whiteText">Играет:</h3>
+                        <p class="whiteText game__infoName">{{$store.state.name}}</p>
+                    </div>
+                    <hr>
+                    <div class="game__infoBlock">
+                        <h3 class="whiteText">Баланс:</h3>
+                        <p class="whiteText">{{$store.state.balance + currency}}</p>
+                    </div>
+                    <hr>
+                    <div class="game__infoBlock">
+                        <h3 class="whiteText">Вопрос:</h3>
+                        <p class="whiteText">{{$store.state.questionNumber + 1}}</p>
+                    </div>
+                    <hr>
+                    <div class="game__infoBlock">
+                        <h3 class="whiteText">На кону:</h3>
+                        <p class="whiteText">{{atStake[$store.state.questionNumber] + currency}}</p>
+                    </div>
                 </div>
             </div>
 
@@ -57,6 +75,8 @@
         data() {
             return {
                 abcd: ['A', 'B', 'C', 'D'],
+                currency: '',
+                atStake: [100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 255000, 500000, 1000000],
             }
         },
 
