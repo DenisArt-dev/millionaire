@@ -28,7 +28,6 @@ export default {
                   link: '/new',
                   hendler: () => {
                     this.$store.commit('resetAll');
-                    console.log(this.$store);
                   }
                 },
                 {

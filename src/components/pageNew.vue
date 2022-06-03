@@ -38,6 +38,7 @@
 
             clickFCategory (ev) {
                 this.$store.state.choseCategory = ev.target.textContent;
+                this.$store.commit('parseDataBaseF');
             }
 
         },
@@ -47,7 +48,11 @@
                 if (this.$store.state.nameIsSet && !this.$store.state.name) return true;
                 else return false;
             }
-        }
+        },
+
+        created () {
+            this.$store.commit('getSaveData');
+        },
 
     }
 

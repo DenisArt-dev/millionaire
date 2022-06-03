@@ -57,53 +57,45 @@
         data() {
             return {
                 abcd: ['A', 'B', 'C', 'D'],
-                dataBase: this.parseDataBase(),
-                ansvers: [],
+                // dataBase: this.parseDataBase(),
             }
         },
         
-        methods: {
-            parseDataBase () {
+        // methods: {
+        //     parseDataBase () {
 
-                let arr = [];
+        //     },
 
-                for (let i = 0; i < this.$store.state.dataBase.blocks.length; i++) {
-                    if (this.$store.state.dataBase.blocks[i].title == this.$store.state.choseCategory) {
-
-                        for(let key in this.$store.state.dataBase.blocks[i].content) {
-                            for (let y = 0; y < this.$store.state.dataBase.blocks[i].content[key].length; y++) {
-                                arr.push(this.$store.state.dataBase.blocks[i].content[key][y]);
-                            }
-                        }
-                        
-                    }
-                }
-
-                return arr;
-
-            },
-
-        },
+        // },
 
         computed: {
 
             setQuestion() {
-                return this.dataBase[this.$store.state.questionNumber].question;
+                console.log(this.$store.state.parseDataBase, '++');
+                return this.$store.state.parseDataBase[this.$store.state.questionNumber].question;
             },
 
             setArrAnswers () {
 
                 let arr = [];
 
-                for (let key in this.dataBase[this.$store.state.questionNumber].answers) {
-                    arr.push(this.dataBase[this.$store.state.questionNumber].answers[key]);
+                for (let key in this.$store.state.parseDataBase[this.$store.state.questionNumber].answers) {
+                    arr.push(this.$store.state.parseDataBase[this.$store.state.questionNumber].answers[key]);
                 } 
 
                 return arr;
 
             }
 
-        }
+        },
+
+        created () {
+            this.$store.commit('getSaveData');
+        },
+
+        // mounted () {
+
+        // }
 
     }
 

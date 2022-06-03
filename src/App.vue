@@ -27,10 +27,15 @@ export default {
     }
   },
 
+  created () {
+    this.$store.commit('getSaveData');
+  },
+
   mounted () {
     this.$store.commit('setColors');
     this.$store.commit('setCategory');
   }
+
 }
 
 </script>
