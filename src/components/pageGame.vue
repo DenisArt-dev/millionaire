@@ -38,7 +38,6 @@
                 </div>
                 <div v-if="setImg" class="game__picture">
                     <img :src="setImg" alt="">
-                    <canvas class="canvas" height="350" width="500" id="canvas"></canvas>
                 </div>
                 <div class="game__info">
                     <div class="game__infoBlock">
@@ -200,32 +199,9 @@
             },
 
             setImg () {
-                // console.log(this.$store.state.parseDataBase[this.$store.state.questionNumber].img);
-
                 if (this.$store.state.parseDataBase[this.$store.state.questionNumber].img) {
-
-                    let data = this.$store.state.parseDataBase[this.$store.state.questionNumber].img.data;
-
-                    let reader = new FileReader();
-
-                    let blob = new Blob(data);
-
-                    let canvas = document.querySelector('.canvas');
-                    let ctx = canvas.getContext('2d');
-
-                    console.log(canvas);
-
-                    reader.readAsDataURL(blob);
-
-                    reader.onload = () => {
-                        ctx.drawImage(reader.result);
-                        // console.log(reader.result);
-                        // return reader.result;
-                    }
-
-                }
-
-                return this.$store.state.parseDataBase[this.$store.state.questionNumber].img;
+                    return this.$store.state.parseDataBase[this.$store.state.questionNumber].img.default;
+                } else return false;
             }
 
         },

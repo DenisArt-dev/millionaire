@@ -1,6 +1,19 @@
 import { createStore } from 'vuex';
 import dataBase from './dataBase/dataBase.json';
 
+// let wsw = 1;
+// while (wsw < 3) {
+
+//     import(`./dataBase/img/${wsw}.jpg`).then( (result) => {
+//         console.log(result);
+//     } ).catch( (e) => {
+//         console.log(e);
+//     } );
+
+//     wsw++;
+
+// }
+
 export default createStore({
 
     state() {
@@ -14,6 +27,7 @@ export default createStore({
             dataBase: dataBase,
             parseDataBase: null,
             atStake: [0, 100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 255000, 500000, 1000000],
+            isSavedata: false,
         }
     },
 
@@ -30,6 +44,18 @@ export default createStore({
 
                     for(let key in state.dataBase.blocks[i].content) {
                         for (let y = 0; y < state.dataBase.blocks[i].content[key].length; y++) {
+
+                            if (state.dataBase.blocks[i].content[key][y].img) {
+
+                                import(`./dataBase/img/${state.dataBase.blocks[i].title}/${state.dataBase.blocks[i].content[key][y].img}.jpg`)
+                                .then( (result) => {
+                                    state.dataBase.blocks[i].content[key][y].img = result;
+                                } ).catch( (e) => {
+                                    console.log(e);
+                                } );
+
+                            }
+
                             arr.push(state.dataBase.blocks[i].content[key][y]);
                         }
                     }
@@ -63,7 +89,7 @@ export default createStore({
 
             if (state.category.length > 0) return;
 
-            for(let i = 0; i < state.dataBase.blocks.length; i++) {
+            for (let i = 0; i < state.dataBase.blocks.length; i++) {
                 state.category.push(state.dataBase.blocks[i].title);
             }
 
@@ -87,7 +113,7 @@ export default createStore({
                     state[key] = obj[key];
                 }
 
-            } else {
+            } else if (state.isSavedata) {
 
                 window.onunload = () => {
 
