@@ -28,6 +28,11 @@ export default createStore({
             parseDataBase: null,
             atStake: [0, 100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 255000, 500000, 1000000],
             isSavedata: false,
+            help: {
+                call: true,
+                mOpinion: true,
+                fiftyFifty: true,
+            }
         }
     },
 

@@ -1,16 +1,17 @@
 
-@mixin hexagon ($width, $height, $heightAfterBefore, $margin) {
+@mixin hexagon ($width, $height, $heightAfterBefore, $margin, $color:$cl1, $cursor:pointer) {
 
     div {
         margin: $margin; 
         width: $width; 
         height: $height;
-        background: $cl1;
+        background: $color;
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor: pointer;
+        cursor: $cursor;
+        transition: $transition;
     }
 
     div:before, 
@@ -22,16 +23,17 @@
         left: 0;
         border-left: ($width / 2) solid transparent;
         border-right: ($width / 2) solid transparent;
+        transition: $transition;
     }
 
     div:before {
         top: -$heightAfterBefore;
-        border-bottom: $heightAfterBefore solid $cl1;
+        border-bottom: $heightAfterBefore solid $color;
     }
 
     div:after {
         bottom: -$heightAfterBefore;
-        border-top: $heightAfterBefore solid $cl1;
+        border-top: $heightAfterBefore solid $color;
     }
 
 }

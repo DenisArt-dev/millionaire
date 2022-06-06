@@ -226,7 +226,6 @@ img {
     &__helpItem {
 
         margin-top: 50px;
-        @include hexagon (60px, 30px, 18px, 0);
 
         p {
             font-weight: 600;
@@ -236,6 +235,20 @@ img {
             fill: $clW;
         }
     } 
+
+    .hic1 {
+        @include hexagon (60px, 30px, 18px, 0, $cl1);
+    }
+
+    .hic2 {
+        @include hexagon (70px, 40px, 19.5px, 0, $cl2);
+    }
+
+    .hicX {
+        @include hexagon (60px, 30px, 18px, 0, $cl5, no-drop);
+        cursor:no-drop;
+    }
+
     
     &__picture {
         margin-top: 35px;

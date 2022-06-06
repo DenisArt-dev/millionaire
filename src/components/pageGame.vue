@@ -17,14 +17,16 @@
 
             <div class="game__content">
                 <div class="game__help">
-                    <div class="game__helpItem">
+                    <div @pointerover="overHexagon" @pointerout="outHexagon" @click="clickHexagon" data-type="call"
+                        :class="{'game__helpItem': true, 'hic1': $store.state.help.call, 'hicX': !$store.state.help.call}">
                         <div>
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 32">
                                 <path d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"></path>
                             </svg>
                         </div>
                     </div>
-                    <div class="game__helpItem">
+                    <div @pointerover="overHexagon" @pointerout="outHexagon" @click="clickHexagon" data-type="mOpinion"
+                        :class="{'game__helpItem': true, 'hic1': $store.state.help.mOpinion, 'hicX': !$store.state.help.mOpinion}">
                         <div>
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 36 32">
                                 <path d="M24 24.082v-1.649c2.203-1.241 4-4.337 4-7.432 0-4.971 0-9-6-9s-6 4.029-6 9c0 3.096 1.797 6.191 4 7.432v1.649c-6.784 0.555-12 3.888-12 7.918h28c0-4.030-5.216-7.364-12-7.918z"></path>
@@ -32,7 +34,8 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="game__helpItem">
+                    <div @pointerover="overHexagon" @pointerout="outHexagon" @click="clickHexagon" data-type="fiftyFifty"
+                        :class="{'game__helpItem': true, 'hic1': $store.state.help.fiftyFifty, 'hicX': !$store.state.help.fiftyFifty}">
                         <div><p class="whiteText">50:50</p></div>
                     </div>
                 </div>
@@ -177,6 +180,48 @@
                 //...
 
             },
+
+            getTarget (target) {
+                if (target.classList.contains('game__helpItem')) return target;
+                else return this.getTarget(target.parentElement);
+            },
+
+            overHexagon (ev) {
+
+                let target = this.getTarget(ev.target);
+
+                if (target.classList.contains('hicX')) return;
+
+                target.classList.remove('hic1');
+                target.classList.add('hic2');
+
+            },
+
+            outHexagon (ev) {
+
+                let target = this.getTarget(ev.target);
+
+                if (target.classList.contains('hicX')) return;
+
+                target.classList.remove('hic2');
+                target.classList.add('hic1');
+            },
+
+            clickHexagon (ev) {
+
+                let target = this.getTarget(ev.target);
+                
+                if (target.dataset.type === 'call') {
+                    console.log(target.dataset.type);
+                } else if (target.dataset.type === 'mOpinion') {
+                    console.log(target.dataset.type);
+                } else if (target.dataset.type === 'fiftyFifty') {
+                    console.log(target.dataset.type);
+                }
+
+                this.$store.state.help[target.dataset.type] = false;
+
+            }
 
         },
 
