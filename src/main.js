@@ -44,4 +44,3 @@ app.component('cmp-pop-up', cmpPopUp);
 app.component('cmp-button', cmpButton);
 
 app.mount('#app');
-

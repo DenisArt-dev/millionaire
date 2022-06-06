@@ -40,6 +40,7 @@
                 this.$store.state.choseCategory = ev.target.textContent;
                 this.$store.state.isSavedata = true;
                 this.$store.commit('parseDataBaseF');
+                this.$store.commit('updateLSDB');
             }
 
         },

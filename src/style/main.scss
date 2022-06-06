@@ -75,6 +75,10 @@ img {
         background-color: $cl4;
     }
 
+    &__5 {
+        background-color: $cl5;
+    }
+
     &__W {
         background-color: $clW;
     }
@@ -246,7 +250,6 @@ img {
 
     .hicX {
         @include hexagon (60px, 30px, 18px, 0, $cl5, no-drop);
-        cursor:no-drop;
     }
 
     

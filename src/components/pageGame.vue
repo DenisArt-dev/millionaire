@@ -220,6 +220,7 @@
                 }
 
                 this.$store.state.help[target.dataset.type] = false;
+                this.$store.commit('updateLSDB');
 
             }
 

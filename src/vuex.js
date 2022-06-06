@@ -1,19 +1,6 @@
 import { createStore } from 'vuex';
 import dataBase from './dataBase/dataBase.json';
 
-// let wsw = 1;
-// while (wsw < 3) {
-
-//     import(`./dataBase/img/${wsw}.jpg`).then( (result) => {
-//         console.log(result);
-//     } ).catch( (e) => {
-//         console.log(e);
-//     } );
-
-//     wsw++;
-
-// }
-
 export default createStore({
 
     state() {
@@ -40,15 +27,16 @@ export default createStore({
 
         parseDataBaseF (state) {
 
-            if (state.parseDataBase) return;
+            if (state.parseDataBase && state.parseDataBase.length > 0) return;
 
             let arr = [];
-
             for (let i = 0; i < state.dataBase.blocks.length; i++) {
                 if (state.dataBase.blocks[i].title == state.choseCategory) {
 
                     for(let key in state.dataBase.blocks[i].content) {
                         for (let y = 0; y < state.dataBase.blocks[i].content[key].length; y++) {
+
+                            console.log(state.dataBase.blocks[i].content[key][y].img, '000');
 
                             if (state.dataBase.blocks[i].content[key][y].img) {
 
@@ -106,6 +94,9 @@ export default createStore({
             state.choseCategory = null;
             state.nameIsSet = false;
             state.questionNumber = 0;
+            state.help.call = true;
+            state.help.mOpinion = true;
+            state.help.fiftyFifty = true;
         },
 
         getSaveData(state) {
@@ -118,15 +109,16 @@ export default createStore({
                     state[key] = obj[key];
                 }
 
-            } else if (state.isSavedata) {
+            } 
+            // else if (state.isSavedata) {
 
-                window.onunload = () => {
+            //     window.onunload = () => {
 
-                    this.commit('updateLSDB');
+            //         this.commit('updateLSDB');
 
-                };
+            //     };
 
-            }
+            // }
 
         },
 
