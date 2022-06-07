@@ -167,6 +167,10 @@ img {
 
 }
 
+.buttonDefault {
+    @include button ('null');
+}
+
 
 .header {
 
@@ -219,6 +223,40 @@ img {
             @include button (150px);
             margin: 0 10px;
         }
+    }
+
+    .popup__mOpinion {
+
+        margin-top: 60px;
+
+        .popup__content {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+    
+            .mOpinion {
+    
+                &__box {
+                    width: 30px;
+                    background-color: $cl1;
+                    margin: 5px 0;
+                    border-bottom: solid 1px $clB;
+                }
+    
+            }
+            
+            h3 {
+                margin: 0;
+            }
+    
+            p {
+                text-align: center;
+                font-size: 11px;
+            }
+    
+        }
+
     }
 
     &__content {

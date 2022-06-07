@@ -13,6 +13,32 @@
             </div>
         </div>
 
+        <div v-if="answerFriend" class="popup">
+            <h2 class="popup__title">Ваш друг ответил:</h2>
+            <p>
+                {{answerFriend}}
+            </p>
+            <div class="popup__buttonsFX">
+                <cmp-button class="buttonDefault" inner="Спасибо" :clickF="clickOk" :hoverSW="true"></cmp-button>
+            </div>
+        </div>
+
+        <div v-if="mOpinion" class="popup popup__mOpinion">
+            <h2 class="popup__title">Опрос {{mOpinionInterviewed}} человек:</h2>
+
+            <div class="popup__content">
+                <div v-for:="(val, key) in mOpinion" class="mOpinion__item">
+                    <p>{{((val / mOpinionInterviewed) * 100).toFixed()}}%</p>
+                    <div :style="{height: ((val / mOpinionInterviewed) * 100).toFixed() + 'px'}" class="mOpinion__box"></div>
+                    <h3>{{key}}</h3>
+                </div>
+            </div>
+
+            <div class="popup__buttonsFX">
+                <cmp-button class="buttonDefault" inner="Продолжить" :clickF="clickOk" :hoverSW="true"></cmp-button>
+            </div>
+        </div>
+
         <div class="container">
 
             <div class="game__content">
@@ -96,17 +122,30 @@
                 abcd: ['A', 'B', 'C', 'D'],
                 currency: '',
                 hoverSW: true,
-                delay: 1000,
+                delay: 5,
                 gameOver: false,
                 pause: false,
                 clickABCD: this.clickF,
                 img: false,
                 abcdActive: [true, true, true, true],
+                answerFriend: null,
+                answerFriendDB: [
+                    'Я уверен, что ответ: ',
+                    'Скорее всего, ответ: ',
+                    'Наверное, ответ: ',
+                    'Я не уверен, но кажеться ответ: ',
+                    'Понятия не имею, извини дружище.',
+                ],
+                mOpinionInterviewed: 100,
+                mOpinion: null
             }
         },
 
         methods: {
             clickF (ev) {
+
+                this.clickOk();
+                
                 let answer = ev.target;
                 let button;
                 if (answer.tagName != 'H3') {
@@ -221,9 +260,36 @@
                 let target = this.getTarget(ev.target);
                 
                 if (target.dataset.type === 'call') {
-                    console.log(target.dataset.type);
+
+                    if (!this.$store.state.help.call) return;
+
+                    this.clickOk();
+                    
+                    this.answerFriend = this.answerFriendF();
+
                 } else if (target.dataset.type === 'mOpinion') {
-                    console.log(target.dataset.type);
+                    
+                    if (!this.$store.state.help.mOpinion) return;
+
+                    this.clickOk();
+
+                    let obj = {
+                        A: 0, 
+                        B: 0,
+                        C: 0,
+                        D: 0,
+                        '?': 0
+                    };
+
+                    for (let i = 0; i < this.mOpinionInterviewed; i++) {
+                        let answ = this.answerFriendF().split(':');
+                        if (answ.length <= 1) obj['?']++;
+                        else obj[answ[1].trim()]++;
+                    }
+
+                    this.mOpinion = obj;
+                    console.log(obj);
+
                 } else if (target.dataset.type === 'fiftyFifty') {
 
                     if (!this.$store.state.help.fiftyFifty) return;
@@ -243,6 +309,38 @@
                 if (item != r && this.abcdActive[this.abcd.indexOf(item)]) {
                     return this.abcd.indexOf(item);
                 } else return this.recurseFifty(this.abcd[this.getRandomMinMax(0, 3)]);
+            },
+
+            answerFriendF () {
+
+                let arrR = [];
+                let result;
+                const q = this.$store.state.parseDataBase[this.$store.state.questionNumber];
+                let x = (q.class === 1) ? 9 : (q.class === 2) ? 5 : (q.class === 3) ? 3 : (q.class === 4) ? 1 : 0;
+
+                for (let i = 0; i < this.abcd.length; i++) {
+                    this.answerFriendDB.push(this.answerFriendDB[q.class - 1]);
+                    this.answerFriendDB.push(this.answerFriendDB[q.class - 1]);
+                    arrR.push(this.abcd[i]);
+                    if (x) {
+                        arrR.push(q.right);
+                        x--;
+                    }
+                }
+
+                for (let y = 0; y < x; y++) {
+                    arrR.push(q.right);
+                }
+
+                result = this.answerFriendDB[this.getRandomMinMax(0, this.answerFriendDB.length - 1)];
+                if (result != this.answerFriendDB[4]) result = result + arrR[this.getRandomMinMax(0, arrR.length - 1)];
+                return result;
+
+            },
+
+            clickOk () {
+                this.answerFriend = null;
+                this.mOpinion = null;
             },
 
             setImage () {
