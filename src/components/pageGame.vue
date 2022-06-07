@@ -39,8 +39,8 @@
                         <div><p class="whiteText">50:50</p></div>
                     </div>
                 </div>
-                <div v-if="setImg" class="game__picture">
-                    <img :src="setImg" alt="">
+                <div v-if="img"  class="game__picture">
+                    <img :src="img" alt="">
                 </div>
                 <div class="game__info">
                     <div class="game__infoBlock">
@@ -99,6 +99,7 @@
                 gameOver: false,
                 pause: false,
                 clickABCD: this.clickF,
+                img: false,
             }
         },
 
@@ -171,6 +172,7 @@
 
                 this.hoverSW = true;
                 this.clickABCD = this.clickF;
+                this.setImage();
 
             },
 
@@ -222,6 +224,21 @@
                 this.$store.state.help[target.dataset.type] = false;
                 this.$store.commit('updateLSDB');
 
+            },
+
+            setImage () {
+
+                let img = this.$store.state.parseDataBase[this.$store.state.questionNumber].img;
+
+                if (img) {
+
+                    import(`../dataBase/img/${this.$store.state.choseCategory}/${img}.jpg`).then( (result) => {
+                        this.img = result.default;
+                    } ).catch( (e) => {
+                        console.log(e);
+                    } );
+
+                } else this.img = false;
             }
 
         },
@@ -243,12 +260,6 @@
                 return arr;
 
             },
-
-            setImg () {
-                if (this.$store.state.parseDataBase[this.$store.state.questionNumber].img) {
-                    return this.$store.state.parseDataBase[this.$store.state.questionNumber].img.default;
-                } else return false;
-            }
 
         },
 

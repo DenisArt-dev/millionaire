@@ -35,20 +35,6 @@ export default createStore({
 
                     for(let key in state.dataBase.blocks[i].content) {
                         for (let y = 0; y < state.dataBase.blocks[i].content[key].length; y++) {
-
-                            console.log(state.dataBase.blocks[i].content[key][y].img, '000');
-
-                            if (state.dataBase.blocks[i].content[key][y].img) {
-
-                                import(`./dataBase/img/${state.dataBase.blocks[i].title}/${state.dataBase.blocks[i].content[key][y].img}.jpg`)
-                                .then( (result) => {
-                                    state.dataBase.blocks[i].content[key][y].img = result;
-                                } ).catch( (e) => {
-                                    console.log(e);
-                                } );
-
-                            }
-
                             arr.push(state.dataBase.blocks[i].content[key][y]);
                         }
                     }
@@ -110,15 +96,6 @@ export default createStore({
                 }
 
             } 
-            // else if (state.isSavedata) {
-
-            //     window.onunload = () => {
-
-            //         this.commit('updateLSDB');
-
-            //     };
-
-            // }
 
         },
 

@@ -37,7 +37,7 @@
             },
 
             clickFCategory (ev) {
-                this.$store.state.choseCategory = ev.target.textContent;
+                this.$store.state.choseCategory = ev.target.textContent.trim();
                 this.$store.state.isSavedata = true;
                 this.$store.commit('parseDataBaseF');
                 this.$store.commit('updateLSDB');
