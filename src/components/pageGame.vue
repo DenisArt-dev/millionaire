@@ -39,6 +39,14 @@
             </div>
         </div>
 
+        <div v-if="isGameOver" class="popup popup__gameOver">
+            <h2 class="popup__title">Очень жаль, но вы проиграли!</h2>
+            <div class="popup__buttonsFX">
+                <cmp-button inner="Заново" :clickF="restart" :hoverSW="true"></cmp-button>
+                <cmp-button inner="На главную" :clickF="goAnotherPage('/')" :hoverSW="true"></cmp-button>
+            </div>
+        </div>
+
         <div class="container">
 
             <div class="game__content">
@@ -76,7 +84,7 @@
                     <hr>
                     <div class="game__infoBlock">
                         <h3 class="whiteText">Баланс:</h3>
-                        <p class="whiteText">{{$store.state.atStake[$store.state.questionNumber] + currency}}</p>
+                        <p class="whiteText">{{this.$store.state.atStake[$store.state.questionNumber] + currency}}</p>
                     </div>
                     <hr>
                     <div class="game__infoBlock">
@@ -122,8 +130,7 @@
                 abcd: ['A', 'B', 'C', 'D'],
                 currency: '',
                 hoverSW: true,
-                delay: 5,
-                gameOver: false,
+                delay: 1000,
                 pause: false,
                 clickABCD: this.clickF,
                 img: false,
@@ -137,7 +144,8 @@
                     'Понятия не имею, извини дружище.',
                 ],
                 mOpinionInterviewed: 100,
-                mOpinion: null
+                mOpinion: null,
+                isGameOver: false,
             }
         },
 
@@ -173,17 +181,15 @@
                         this.setColorToButton(button, this.$store.state.colors[2]);
                     } else {
                         this.setColorToButton(button, this.$store.state.colors[3]);
-                        this.gameOver = true;
+                        this.$store.state.isGameOver = true;
+                        this.$store.commit('updateLSDB');
                     }
 
                     setTimeout( () => {
 
-                        if (this.gameOver) {
-                            alert('Игра окончена!');
-                        } else {
-
-                            this.pause = true;
-
+                        if (!this.$store.state.isGameOver) this.pause = true;
+                        else {
+                            this.gameOverF();
                         }
 
                     }, this.delay * 1.5 );
@@ -288,7 +294,6 @@
                     }
 
                     this.mOpinion = obj;
-                    console.log(obj);
 
                 } else if (target.dataset.type === 'fiftyFifty') {
 
@@ -362,6 +367,27 @@
                 return +(a + Math.random() * (b - a)).toFixed();
             },
 
+            goAnotherPage (page) {
+                return () => {
+                    this.$router.push(page);
+                }
+            },
+
+            gameOverF () {
+                this.isGameOver = this.$store.state.isGameOver;
+                for (let i = 0; i < this.abcdActive.length; i++) {
+                    this.abcdActive[i] = false;
+                }
+                this.$store.state.help.call = false;
+                this.$store.state.help.mOpinion = false;
+                this.$store.state.help.fiftyFifty = false;
+            },
+
+            restart () {
+                this.$store.commit('resetAll');
+                this.$router.push('/new');
+            }
+
         },
 
         computed: {
@@ -389,6 +415,11 @@
         },
 
         mounted () {
+
+            if (this.$store.state.isGameOver) {
+                this.gameOverF();
+            }
+
             this.setImage();
         }
 

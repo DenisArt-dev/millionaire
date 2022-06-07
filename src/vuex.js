@@ -19,7 +19,8 @@ export default createStore({
                 call: true,
                 mOpinion: true,
                 fiftyFifty: true,
-            }
+            },
+            isGameOver: false,
         }
     },
 
@@ -83,6 +84,7 @@ export default createStore({
             state.help.call = true;
             state.help.mOpinion = true;
             state.help.fiftyFifty = true;
+            state.isGameOver = false;
         },
 
         getSaveData(state) {
