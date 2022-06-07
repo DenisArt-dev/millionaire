@@ -75,7 +75,8 @@
                                 :inner="item"
                                 :hoverSW="hoverSW"
                                 :lable="abcd[i]"
-                                :clickF="clickABCD"></cmp-button>
+                                :clickF="clickABCD"
+                                :noActive="!abcdActive[i]"></cmp-button>
                 </div>
 
             </div>
@@ -100,6 +101,7 @@
                 pause: false,
                 clickABCD: this.clickF,
                 img: false,
+                abcdActive: [true, true, true, true],
             }
         },
 
@@ -172,6 +174,11 @@
 
                 this.hoverSW = true;
                 this.clickABCD = this.clickF;
+
+                for (let i = 0; i < this.abcdActive.length; i++) {
+                    this.abcdActive[i] = true;
+                }
+
                 this.setImage();
 
             },
@@ -218,12 +225,24 @@
                 } else if (target.dataset.type === 'mOpinion') {
                     console.log(target.dataset.type);
                 } else if (target.dataset.type === 'fiftyFifty') {
-                    console.log(target.dataset.type);
+
+                    if (!this.$store.state.help.fiftyFifty) return;
+
+                    this.abcdActive[this.recurseFifty(this.abcd[this.getRandomMinMax(0, 3)])] = false;
+                    this.abcdActive[this.recurseFifty(this.abcd[this.getRandomMinMax(0, 3)])] = false;
+
                 }
 
                 this.$store.state.help[target.dataset.type] = false;
                 this.$store.commit('updateLSDB');
 
+            },
+
+            recurseFifty (item) {
+                const r = this.$store.state.parseDataBase[this.$store.state.questionNumber].right;
+                if (item != r && this.abcdActive[this.abcd.indexOf(item)]) {
+                    return this.abcd.indexOf(item);
+                } else return this.recurseFifty(this.abcd[this.getRandomMinMax(0, 3)]);
             },
 
             setImage () {
@@ -239,7 +258,11 @@
                     } );
 
                 } else this.img = false;
-            }
+            },
+
+            getRandomMinMax(a, b) {
+                return +(a + Math.random() * (b - a)).toFixed();
+            },
 
         },
 
@@ -266,6 +289,10 @@
         created () {
             this.$store.commit('getSaveData');
         },
+
+        mounted () {
+            this.setImage();
+        }
 
     }
 

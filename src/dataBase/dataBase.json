@@ -13,7 +13,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "A"
+                        "right": "A",
+                        "class": 1
                     }, 
                     {
                         "question": "Вопрос*2",
@@ -24,7 +25,8 @@
                             "D": "Ответ4"
                         },
                         "img": 1,
-                        "right": "B"
+                        "right": "B",
+                        "class": 1
                     },
                     {
                         "question": "Вопрос*3",
@@ -35,7 +37,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 1
                     },
                     {
                         "question": "Вопрос*4",
@@ -46,7 +49,8 @@
                             "D": "Ответ4"
                         },
                         "img": 2,
-                        "right": "B"
+                        "right": "B",
+                        "class": 1
                     }
                 ],
                 "type2": [
@@ -59,7 +63,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 2
                     }, 
                     {
                         "question": "Вопрос**2",
@@ -70,7 +75,8 @@
                             "D": "Ответ4"
                         },
                         "img": 3,
-                        "right": "B"
+                        "right": "B",
+                        "class": 2
                     },
                     {
                         "question": "Вопрос**3",
@@ -81,7 +87,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 2
                     }
                 ],
                 "type3": [
@@ -94,7 +101,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 3
                     }, 
                     {
                         "question": "Вопрос***2",
@@ -105,7 +113,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 3
                     },
                     {
                         "question": "Вопрос***3",
@@ -116,7 +125,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 3
                     }
                 ],
                 "type4": [
@@ -129,7 +139,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 4
                     }, 
                     {
                         "question": "Вопрос****2",
@@ -140,7 +151,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 4
                     },
                     {
                         "question": "Вопрос****3",
@@ -151,7 +163,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 4
                     }
                 ],
                 "type5": [
@@ -164,7 +177,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 5
                     }, 
                     {
                         "question": "Вопрос*****2",
@@ -175,7 +189,8 @@
                             "D": "Ответ4"
                         },
                         "img": null,
-                        "right": "B"
+                        "right": "B",
+                        "class": 5
                     }
                 ]
             }
