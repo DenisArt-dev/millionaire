@@ -138,7 +138,7 @@
                 abcd: ['A', 'B', 'C', 'D'],
                 currency: ' тапочек',
                 hoverSW: true,
-                delay: 1,
+                delay: 1000,
                 pause: false,
                 clickABCD: this.clickF,
                 img: false,

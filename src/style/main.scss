@@ -79,6 +79,10 @@ img {
         background-color: $cl5;
     }
 
+    &__6 {
+        background-color: $cl6;
+    }
+
     &__W {
         background-color: $clW;
     }
@@ -150,7 +154,7 @@ img {
 
     &__buttonsFX {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         padding: 20px 0;
     }
 
@@ -380,6 +384,39 @@ img {
         }
 
     }    
+
+}
+
+.popup__createQuestions {
+
+    margin-top: 50px;
+
+    .button {
+        
+        &__1 {
+            // margin: 0 10px;
+            @include button (150px); 
+        }
+    
+    }
+
+    .createQuestions {
+
+        &__complexity {
+            text-align: left;
+        }
+
+        &__starsBox {
+            display: flex;
+            align-items: center;
+
+            p {
+                margin-left: 10px;
+            }
+        }
+
+    }
+
 
 }
 

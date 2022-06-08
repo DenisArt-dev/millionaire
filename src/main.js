@@ -7,9 +7,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 import cmpHeader from './components/cmpHeader.vue';
 import cmpPopUp from './components/cmpPopUp.vue';
 import cmpButton from './components/cmpButton.vue';
+import cmpStars from './components/cmpStars.vue';
 import pageGame from './components/pageGame.vue';
 import pageStart from './components/pageStart.vue';
 import pageNew from './components/pageNew.vue';
+import pageCreateQuestions from './components/pageCreateQuestions.vue';
 
 import vuex from './vuex.js';
 
@@ -28,6 +30,11 @@ const router = createRouter({
         {
             path: '/new',
             component: pageNew,
+        },
+
+        {
+            path: '/create',
+            component: pageCreateQuestions
         }
 
     ],
@@ -42,5 +49,6 @@ app.use(vuex);
 app.component('cmp-header', cmpHeader);
 app.component('cmp-pop-up', cmpPopUp);
 app.component('cmp-button', cmpButton);
+app.component('cmp-stars', cmpStars);
 
 app.mount('#app');

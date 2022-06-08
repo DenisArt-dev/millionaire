@@ -41,7 +41,7 @@ export default {
           },
           {
             text: 'Создать свои вопросы',
-            link: '/',
+            link: '/create',
             hendler: null
           }
         ];

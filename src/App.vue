@@ -6,6 +6,7 @@
     <span class="colors__3"></span>
     <span class="colors__4"></span>
     <span class="colors__5"></span>
+    <span class="colors__6"></span>
     <span class="colors__W"></span>
     <span class="colors__B"></span>
     <span class="colors__R"></span>
@@ -40,7 +41,3 @@ export default {
 }
 
 </script>
-
-<style lang="scss">
-
-</style>
