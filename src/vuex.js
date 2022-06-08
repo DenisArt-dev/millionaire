@@ -21,6 +21,7 @@ export default createStore({
                 fiftyFifty: true,
             },
             isGameOver: false,
+            isWin: false,
         }
     },
 
@@ -85,6 +86,7 @@ export default createStore({
             state.help.mOpinion = true;
             state.help.fiftyFifty = true;
             state.isGameOver = false;
+            state.isWin = false;
         },
 
         getSaveData(state) {

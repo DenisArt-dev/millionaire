@@ -5,7 +5,7 @@
         <div v-if="pause" class="popup popup__continue">
             <h2 class="popup__title">Продолжить?</h2>
             <p>
-                Ваш выигрыш: <b>{{$store.state.atStake[$store.state.questionNumber + 1] + currency}}</b>
+                Ваш выигрыш: <b>{{setNumbers('next') + currency}}</b>
             </p>
             <div class="popup__buttonsFX">
                 <cmp-button inner="Продолжить" :clickF="buttonGoOnF" :hoverSW="true"></cmp-button>
@@ -39,8 +39,16 @@
             </div>
         </div>
 
-        <div v-if="isGameOver" class="popup popup__gameOver">
+        <div v-if="isGameOver" class="popup popup__gameEnd">
             <h2 class="popup__title">Очень жаль, но вы проиграли!</h2>
+            <div class="popup__buttonsFX">
+                <cmp-button inner="Заново" :clickF="restart" :hoverSW="true"></cmp-button>
+                <cmp-button inner="На главную" :clickF="goAnotherPage('/')" :hoverSW="true"></cmp-button>
+            </div>
+        </div>
+
+        <div v-if="isWin" class="popup popup__gameEnd">
+            <h2 class="popup__title">Поздравляем, вы выиграли:<br> <b>{{setNumbers('next') + currency}}!</b></h2>
             <div class="popup__buttonsFX">
                 <cmp-button inner="Заново" :clickF="restart" :hoverSW="true"></cmp-button>
                 <cmp-button inner="На главную" :clickF="goAnotherPage('/')" :hoverSW="true"></cmp-button>
@@ -84,7 +92,7 @@
                     <hr>
                     <div class="game__infoBlock">
                         <h3 class="whiteText">Баланс:</h3>
-                        <p class="whiteText">{{this.$store.state.atStake[$store.state.questionNumber] + currency}}</p>
+                        <p class="whiteText">{{setNumbers() + currency}}</p>
                     </div>
                     <hr>
                     <div class="game__infoBlock">
@@ -94,7 +102,7 @@
                     <hr>
                     <div class="game__infoBlock">
                         <h3 class="whiteText">На кону:</h3>
-                        <p class="whiteText">{{$store.state.atStake[$store.state.questionNumber + 1] + currency}}</p>
+                        <p class="whiteText">{{setNumbers('next') + currency}}</p>
                     </div>
                 </div>
             </div>
@@ -128,16 +136,16 @@
         data() {
             return {
                 abcd: ['A', 'B', 'C', 'D'],
-                currency: '',
+                currency: ' тапочек',
                 hoverSW: true,
-                delay: 1000,
+                delay: 1,
                 pause: false,
                 clickABCD: this.clickF,
                 img: false,
                 abcdActive: [true, true, true, true],
                 answerFriend: null,
                 answerFriendDB: [
-                    'Я уверен, что ответ: ',
+                    `Я уверен, что ответ: `,
                     'Скорее всего, ответ: ',
                     'Наверное, ответ: ',
                     'Я не уверен, но кажеться ответ: ',
@@ -146,6 +154,7 @@
                 mOpinionInterviewed: 100,
                 mOpinion: null,
                 isGameOver: false,
+                isWin: false, 
             }
         },
 
@@ -179,17 +188,21 @@
 
                     if (answer === this.$store.state.parseDataBase[this.$store.state.questionNumber].right) {
                         this.setColorToButton(button, this.$store.state.colors[2]);
+                        if (!this.$store.state.parseDataBase[this.$store.state.questionNumber + 1]) {
+                            this.$store.state.isWin = true;
+                        }
                     } else {
                         this.setColorToButton(button, this.$store.state.colors[3]);
                         this.$store.state.isGameOver = true;
-                        this.$store.commit('updateLSDB');
                     }
 
                     setTimeout( () => {
 
-                        if (!this.$store.state.isGameOver) this.pause = true;
-                        else {
-                            this.gameOverF();
+                        if (!this.$store.state.isGameOver && !this.$store.state.isWin) this.pause = true;
+                        else if (this.$store.state.isWin) {
+                            this.gameEndF('win');
+                        } else {
+                            this.gameEndF('over');
                         }
 
                     }, this.delay * 1.5 );
@@ -231,7 +244,8 @@
             buttonEndF () {
 
                 this.pause = false;
-                //...
+                this.$store.state.isWin = true;
+                this.gameEndF('win');
 
             },
 
@@ -373,19 +387,36 @@
                 }
             },
 
-            gameOverF () {
-                this.isGameOver = this.$store.state.isGameOver;
+            gameEndF (sw) {
+                if (sw === 'over') this.isGameOver = this.$store.state.isGameOver;
+                if (sw === 'win') this.isWin = this.$store.state.isWin; 
+                
                 for (let i = 0; i < this.abcdActive.length; i++) {
                     this.abcdActive[i] = false;
                 }
+
                 this.$store.state.help.call = false;
                 this.$store.state.help.mOpinion = false;
                 this.$store.state.help.fiftyFifty = false;
+
+                this.$store.commit('updateLSDB');
             },
 
             restart () {
                 this.$store.commit('resetAll');
                 this.$router.push('/new');
+            },
+
+            setNumbers (sw) {
+
+                let formatter = new Intl.NumberFormat('ru', {
+                    useGrouping: true
+                });
+
+                if (sw === 'next') {
+                    return formatter.format(this.$store.state.atStake[this.$store.state.questionNumber + 1]);
+                } else return formatter.format(this.$store.state.atStake[this.$store.state.questionNumber]);
+                
             }
 
         },
@@ -416,9 +447,8 @@
 
         mounted () {
 
-            if (this.$store.state.isGameOver) {
-                this.gameOverF();
-            }
+            if (this.$store.state.isGameOver) this.gameEndF('over');
+            if (this.$store.state.isWin) this.gameEndF('win');
 
             this.setImage();
         }
