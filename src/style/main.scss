@@ -31,6 +31,7 @@ p {
     margin: 0;
     padding: 0;
     font-weight: 300;
+    font-size: $pFz;
 }
 
 h1 {
@@ -122,7 +123,7 @@ img {
     background-color: $clW;
     box-shadow: $shadow;
     text-align: center;
-    max-width: 500px;
+    max-width: 700px;
     position: absolute;
     padding: 0 40px;
     left: 50%;
@@ -156,6 +157,11 @@ img {
         display: flex;
         justify-content: space-between;
         padding: 20px 0;
+
+        .button {
+            margin: auto;
+        }
+
     }
 
     &__buttonsBL {
@@ -167,6 +173,36 @@ img {
             justify-content: center;
         }
 
+    }
+
+    &__radio {
+        display: none;
+        opacity: 0.5;
+    }
+
+    &__radioLable {
+        border: 1px solid $clB;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    &__radio:checked + &__radioLable div {
+        height: 9px;
+        width: 9px;
+        background-color: $clB;
+        border-radius: 50%;
+        margin: auto;
+    }
+
+    &__radio:checked + &__radioLable::before {
+        content: "Правильный";
+        font-size: $pFz;
+        position: absolute;
+        right: 65px
     }
 
 }
@@ -205,7 +241,7 @@ img {
         .hexagon {
             margin: 50px auto;
         }
-        
+
         @include hexagon (100px, 55px, 25px, 0);
     }
 
@@ -238,27 +274,27 @@ img {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-    
+
             .mOpinion {
-    
+
                 &__box {
                     width: 30px;
                     background-color: $cl1;
                     margin: 5px 0;
                     border-bottom: solid 1px $clB;
                 }
-    
+
             }
-            
+
             h3 {
                 margin: 0;
             }
-    
+
             p {
                 text-align: center;
                 font-size: 11px;
             }
-    
+
         }
 
     }
@@ -287,7 +323,7 @@ img {
         svg {
             fill: $clW;
         }
-    } 
+    }
 
     .hic1 {
         @include hexagon (60px, 30px, 18px, 0, $cl1);
@@ -301,7 +337,7 @@ img {
         @include hexagon (60px, 30px, 18px, 0, $cl5, no-drop);
     }
 
-    
+
     &__picture {
         margin-top: 35px;
         max-width: 500px;
@@ -350,10 +386,13 @@ img {
             margin: auto;
             @include button ($widthContainer2, '', 75px, 30px);
             position: relative;
+
             .button__center {
                 p {
                     margin: 10px;
-                };
+                }
+
+                ;
             }
 
         }
@@ -383,21 +422,22 @@ img {
 
         }
 
-    }    
+    }
 
 }
 
 .popup__createQuestions {
 
     margin-top: 50px;
+    width: 500px;
 
     .button {
-        
+
         &__1 {
             // margin: 0 10px;
-            @include button (150px); 
+            @include button (150px);
         }
-    
+
     }
 
     .createQuestions {
@@ -420,3 +460,69 @@ img {
 
 }
 
+.popup__makeQuestion {
+
+    margin-top: 150px;
+    padding: 15px 40px;
+
+    .button:nth-child(1n+2) {
+        margin-left: 10px;
+    }
+
+    .popup__input {
+        width: 100%;
+    }
+
+    .popup__inputBlock {
+        margin: 10px 0;
+    }
+
+    .inputBlock__descr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            margin: 7px 0;
+        }
+    }
+
+    .inputBlock__complexity {
+
+        display: flex;
+        align-items: center;
+
+        p {
+            margin-right: 10px;
+        }
+
+    }
+
+    .makeQuestion__warn {
+        color: $cl4;
+    }
+
+    #addImgInput {
+        display: none;
+    }
+
+    .popup__buttonsFX {
+        padding: 10px 0;
+    }
+
+    .makeQuestion__imgTitle {
+
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+
+        h3 {
+            margin: 0;
+        }
+
+        p {
+            margin-left: 10px;
+        }
+    }
+
+}

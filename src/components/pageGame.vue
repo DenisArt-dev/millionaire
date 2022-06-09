@@ -368,7 +368,7 @@
 
                 if (img) {
 
-                    import(`../dataBase/img/${this.$store.state.choseCategory}/${img}.jpg`).then( (result) => {
+                    import(`../dataBase/img/${this.$store.state.choseCategory}/${img}`).then( (result) => {
                         this.img = result.default;
                     } ).catch( (e) => {
                         console.log(e);
