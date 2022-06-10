@@ -31,20 +31,13 @@ export default createStore({
 
             if (state.parseDataBase && state.parseDataBase.length > 0) return;
 
-            let arr = [];
             for (let i = 0; i < state.dataBase.blocks.length; i++) {
+
                 if (state.dataBase.blocks[i].title == state.choseCategory) {
-
-                    for(let key in state.dataBase.blocks[i].content) {
-                        for (let y = 0; y < state.dataBase.blocks[i].content[key].length; y++) {
-                            arr.push(state.dataBase.blocks[i].content[key][y]);
-                        }
-                    }
-                    
+                    state.parseDataBase = state.dataBase.blocks[i].content;
                 }
+                
             }
-
-            state.parseDataBase = arr;
 
         },
 

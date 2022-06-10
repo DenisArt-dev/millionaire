@@ -428,13 +428,12 @@ img {
 
 .popup__createQuestions {
 
-    margin-top: 50px;
-    width: 500px;
+    margin-top: 80px;
+    // width: 500px;
 
     .button {
 
         &__1 {
-            // margin: 0 10px;
             @include button (150px);
         }
 
@@ -453,6 +452,10 @@ img {
             p {
                 margin-left: 10px;
             }
+        }
+
+        &__yourQbox {
+            padding-bottom: 20px;
         }
 
         &__yourQitem {
@@ -475,12 +478,20 @@ img {
 
             }
 
+            .button {
+                @include button ('null');
+            }
+
         }
 
-        &__yourQitem:nth-child(1n+2) {
-            margin-left: 5px;
-        }
+        &__yourQitem {
 
+            margin: 10px 0;
+
+            .yourQitem:nth-child(1n+2) {
+                margin-left: 10px;
+            }
+        }
     }
 
 

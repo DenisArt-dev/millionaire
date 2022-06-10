@@ -28,15 +28,13 @@
 
             <hr>
 
-            <div>
+            <div class="createQuestions__yourQbox">
                 <h2 class="popup__title">Ваши вопросы:</h2>
-                <div v-for:="(item, index) in dataBase.content" >
-                    <div class="createQuestions__yourQitem" v-for:="(elem, i) in item">
-                        <div class="yourQitem__num"><p>{{item[index]}}</p></div>
-                        <div>{{elem.question}}</div>
-                        <cmp-stars :selected="elem.class"></cmp-stars>
-                        <cmp-button class="button__1" inner="Удалить" :clickF="null" :hoverSW="true"></cmp-button>
-                    </div>
+                <div v-for:="(item, index) in dataBase.content" class="createQuestions__yourQitem">
+                    <div class="yourQitem__num yourQitem"><p>{{index + 1}}</p></div>
+                    <div class="yourQitem">{{item.question.slice(0, 30) + '...'}}</div>
+                    <cmp-stars class="yourQitem" :selected="item.class"></cmp-stars>
+                    <cmp-button class="yourQitem" inner="Удалить" :clickF="null" :hoverSW="true"></cmp-button>
                 </div>
             </div>
 
@@ -150,27 +148,23 @@
 
                 dataBase: {
                     title: 'Без категории',
-                    content: {
-                        type1: [],
-                        type2: [
-                            {
-                                question: 'Вопрос',
-                                answers: {
-                                    A: 'a',
-                                    B: 'b',
-                                    C: 'c',
-                                    D: 'd'
-                                },
-                                img: null,
-                                imgBuffer: null,
-                                right: 'D',
-                                class: 2,
-                            }
-                        ],
-                        type3: [],
-                        type4: [],
-                        type5: [], 
-                    },
+                    content: [
+
+                        {
+                            question: 'Вопрос ',
+                            answers: {
+                                A: 'a',
+                                B: 'b',
+                                C: 'c',
+                                D: 'd'
+                            },
+                            img: null,
+                            imgBuffer: null,
+                            right: 'D',
+                            class: 2,
+                        }
+
+                    ],
                 }
 
             }
@@ -263,7 +257,7 @@
                 this.makeQ.warn = this.checkForm();
                 if (this.makeQ.warn) return; 
 
-                this.dataBase.content['type' + this.questionResult.class].push(this.questionResult);
+                this.dataBase.content.push(this.questionResult);
 
                 for (let i = 0; i < this.statisticTypeQuestions.length; i++) {
                     if (this.statisticTypeQuestions[i].type === this.questionResult.class) {
