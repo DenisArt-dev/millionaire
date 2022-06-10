@@ -455,6 +455,32 @@ img {
             }
         }
 
+        &__yourQitem {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .yourQitem__num {
+                border: 1px solid $clB;
+                border-radius: 50%;
+                width: 25px;
+                height: 25px;
+                display: flex;
+                align-items: center;
+
+                p {
+                    margin: auto;
+                }
+
+            }
+
+        }
+
+        &__yourQitem:nth-child(1n+2) {
+            margin-left: 5px;
+        }
+
     }
 
 

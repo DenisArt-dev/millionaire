@@ -2,7 +2,7 @@
     
     <div class="container">
 
-        <div v-if="!isHideCQ" class="popup popup__createQuestions">
+        <div v-if="isCreateQ" class="popup popup__createQuestions">
 
             <h2 class="popup__title">Добавьте свои вопросы</h2>
             
@@ -22,7 +22,7 @@
             <hr>
 
             <div class="popup__buttonsFX">
-                <cmp-button class="button__1" inner="Добавить" :clickF="null" :hoverSW="true"></cmp-button>
+                <cmp-button class="button__1" inner="Добавить" :clickF="makeQuestionStart" :hoverSW="true"></cmp-button>
                 <cmp-button class="button__1" inner="Начать" :clickF="null" :hoverSW="true"></cmp-button>
             </div>
 
@@ -30,11 +30,19 @@
 
             <div>
                 <h2 class="popup__title">Ваши вопросы:</h2>
+                <div v-for:="(item, index) in dataBase.content" >
+                    <div class="createQuestions__yourQitem" v-for:="(elem, i) in item">
+                        <div class="yourQitem__num"><p>{{item[index]}}</p></div>
+                        <div>{{elem.question}}</div>
+                        <cmp-stars :selected="elem.class"></cmp-stars>
+                        <cmp-button class="button__1" inner="Удалить" :clickF="null" :hoverSW="true"></cmp-button>
+                    </div>
+                </div>
             </div>
 
         </div>
 
-        <div class="popup popup__makeQuestion">
+        <div v-if="isMakeQ" class="popup popup__makeQuestion">
 
             <div class="makeQuestion__warn"><p id="makeQuestionWarn">{{makeQ.warn}}</p></div>
 
@@ -71,7 +79,8 @@
             <input id="addImgInput" type="file" @change="changeInputFile" title="Добавить картинку" value="">
 
             <div class="popup__buttonsFX">
-                <cmp-button class="popup__button" inner="Добавить картинку" :clickF="addImgHendler" :hoverSW="true"></cmp-button>
+                <cmp-button class="popup__button" :inner="!questionResult.img ? 'Добавить картинку' : 'Удалить картинку'"
+                            :clickF="addImgHendler" :hoverSW="true"></cmp-button>
                 <cmp-button class="popup__button" inner="Готово" :clickF="sendForm" :hoverSW="true"></cmp-button>
             </div>
         </div>
@@ -115,7 +124,8 @@
                         all: 2
                     },
                 ],
-                isHideCQ: false,
+                isCreateQ: true,
+                isMakeQ: false,
                 makeQ: {
                     warn: null,
                     maxInput: {
@@ -138,13 +148,43 @@
                     class: 1,
                 }, 
 
+                dataBase: {
+                    title: 'Без категории',
+                    content: {
+                        type1: [],
+                        type2: [
+                            {
+                                question: 'Вопрос',
+                                answers: {
+                                    A: 'a',
+                                    B: 'b',
+                                    C: 'c',
+                                    D: 'd'
+                                },
+                                img: null,
+                                imgBuffer: null,
+                                right: 'D',
+                                class: 2,
+                            }
+                        ],
+                        type3: [],
+                        type4: [],
+                        type5: [], 
+                    },
+                }
+
             }
         },
 
         methods: {
 
             clickStarHendler (box) {
-                this.questionResult.class = box;
+                this.questionResult.class = +box;
+            },
+
+            makeQuestionStart () {
+                this.isCreateQ = false;
+                this.isMakeQ = true;
             },
 
             checkInput (ev) {
@@ -167,8 +207,6 @@
 
                 }
 
-                console.log(this.questionResult);
-
             },
 
             setRightQ (ev) {
@@ -176,7 +214,11 @@
             },
 
             addImgHendler () {
-                document.getElementById('addImgInput').click();
+                if (this.questionResult.img) {
+                    this.questionResult.img = null;
+                    this.questionResult.imgBuffer = null;
+                }
+                else document.getElementById('addImgInput').click();
             },
 
             changeInputFile (input) {
@@ -194,9 +236,59 @@
 
             checkForm () {
 
+                // для проверки уровня сложности
+                let statTypQues = this.statisticTypeQuestions[this.questionResult.class - 1];
+
+                // для проверки ответов
+                let isEmptyA = false;
+                for (let key in this.questionResult.answers) {
+                    if (!this.questionResult.answers[key]) isEmptyA = true;
+                }
+
+                if (!this.questionResult.question) {
+                    return 'Пожалуйста, напишите свой вопрос!';
+                } else if (statTypQues.all === statTypQues.done) {
+                    return 'Пожалуйста, выберите другой уровень сложности!';
+                } else if (isEmptyA) {
+                    return 'Вы указали не все варианты ответов!';
+                } else if (!this.questionResult.right) {
+                    return 'Не указан правильный ответ!';
+                }
+
+                return null;
             },
 
             sendForm () {
+
+                this.makeQ.warn = this.checkForm();
+                if (this.makeQ.warn) return; 
+
+                this.dataBase.content['type' + this.questionResult.class].push(this.questionResult);
+
+                for (let i = 0; i < this.statisticTypeQuestions.length; i++) {
+                    if (this.statisticTypeQuestions[i].type === this.questionResult.class) {
+                        this.statisticTypeQuestions[i].done++;
+                    }
+                }
+                
+                this.questionResult = {
+                    question: null,
+                    answers: {
+                        A: null,
+                        B: null,
+                        C: null,
+                        D: null
+                    },
+                    img: null,
+                    imgBuffer: null,
+                    right: null,
+                    class: 1,
+                };
+
+                this.isCreateQ = true;
+                this.isMakeQ = false;
+
+                console.log(this.dataBase);
 
             }
         }
