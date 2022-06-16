@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import './style/main.scss';
+import './style/media.scss';
 
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -42,6 +43,18 @@ const router = createRouter({
 });
 
 const app = createApp(App);
+
+router.beforeEach( () => {
+
+    let menu = document.querySelector('.header__nav');
+    
+    if (getComputedStyle(menu.children[0]).position === 'absolute' && getComputedStyle(menu).display === 'block') {
+        console.log('done');
+
+        menu.style.display = 'none';
+    }
+
+} );
 
 app.use(router);
 app.use(vuex);

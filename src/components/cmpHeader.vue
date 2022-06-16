@@ -1,13 +1,23 @@
 <template>
     <header class="header">
         <div class="container">
-          <nav>
+
+          <div class="header__burgWrapp">
+            <div @click="showBurgerMenu" class="header__burg">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+
+          <nav class="header__nav">
             <ul>
               <router-link v-for:="item in hederMenu" :to="item.link" @click="item.hendler">
                 <li><p class="whiteText">{{item.text}}</p></li>
               </router-link>
             </ul>
           </nav>
+
         </div>
     </header>
 </template>
@@ -57,6 +67,12 @@ export default {
         return arr;
 
       },
+
+      showBurgerMenu () {
+        let element = document.querySelector('.header__nav');
+        if (element.style.display !== 'block') element.style.display = 'block';
+        else element.style.display = 'none';
+      }
 
     }
 }

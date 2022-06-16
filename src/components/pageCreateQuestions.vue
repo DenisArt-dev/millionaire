@@ -36,7 +36,7 @@
                             <td>
                                 <div class="yourQitem__num yourQitem"><p>{{index + 1}}</p></div>
                             </td>
-                            <td class="yourQitem__text yourQitem">{{item.question.slice(0, 30) + '...'}}</td>
+                            <td class="yourQitem__text yourQitem">{{item.question.slice(0, checkSizeScreenForQleng()) + '...'}}</td>
                             <td>
                                 <cmp-stars class="yourQitem" :selected="item.class"></cmp-stars>
                             </td>
@@ -62,7 +62,7 @@
             <div class="makeQuestion__warn"><p id="makeQuestionWarn">{{makeQ.warn}}</p></div>
 
             <div class="popup__inputBlock">
-                <div class="inputBlock__descr">
+                <div class="inputBlock__descrQ">
                     <label for="inpQuestion">
                         <h3>Вопрос:</h3>
                     </label>
@@ -298,6 +298,12 @@
                     this.dataBase.content = arr1.concat(arr2);
 
                 }
+            },
+
+            checkSizeScreenForQleng () {
+                if (window.innerWidth < 460) {
+                    return 10;
+                } else return 30;
             }
         }
 

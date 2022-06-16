@@ -100,7 +100,7 @@ img {
 
 .container {
     max-width: 1180px;
-    padding: 0 10px;
+    padding: 0 5px;
     margin: 0 auto;
     // position: relative;
 }
@@ -249,6 +249,30 @@ img {
 
         &:hover {
             background-color: $cl2;
+        }
+    }
+
+    &__burgWrapp {
+        display: flex;
+        justify-content: right;
+        display: none;
+    }
+
+    &__burg {
+        width: 35px;
+        padding: 10px 5px;
+        transition: $transition;
+    
+        &:hover {
+            background-color: $cl2;
+        }
+    
+        div {
+            border-top: 3px solid $clW;
+        }
+    
+        div:nth-child(1n+2) {
+            margin-top: 5px;
         }
     }
 
@@ -543,7 +567,7 @@ img {
         margin: 10px 0;
     }
 
-    .inputBlock__descr {
+    .inputBlock__descr, .inputBlock__descrQ {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -557,6 +581,8 @@ img {
 
         display: flex;
         align-items: center;
+        // width: 100%;
+        // justify-content: space-between;
 
         p {
             margin-right: 10px;

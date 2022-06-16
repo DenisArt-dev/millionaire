@@ -1,0 +1,92 @@
+@import "./var.scss";
+
+@media (max-width: 830px) {
+
+    .game__answers {
+        width: auto;
+        justify-content: center;
+    }
+
+    .game__helpItem {
+        margin-top: 35px;
+    }
+
+    .game__content {
+        flex-flow: column-reverse;
+    }
+
+    .game__help {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .game__info {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 630px) {
+    .header__nav {
+        display: none;
+
+        ul {
+            display: block;
+            position: absolute;
+            z-index: 300;
+            background-color: $cl1;
+            right: 0;
+        }
+    }
+
+    .header__burgWrapp {
+        display: flex;
+    }
+}
+
+@media (max-width: 460px) {
+
+    .popup {
+        padding: 10px 20px;
+    }
+
+    .popup__buttonsFX {
+
+        flex-flow: column;
+        // justify-content: center;
+        align-items: center;
+
+        .button {
+            margin: 0;
+        }
+
+    }
+
+    .popup__createQuestions .button:nth-child(1n+2) {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .popup__makeQuestion .button:nth-child(1n+2) {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .popup__makeQuestion .inputBlock__descrQ {
+
+        flex-flow: column;
+        align-items: flex-start;
+        
+    }
+
+    .popup__makeQuestion .inputBlock__complexity {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .createQuestions__yourQitem {
+        .stars__wrapp {
+            display: none;
+        }
+    }
+
+}
