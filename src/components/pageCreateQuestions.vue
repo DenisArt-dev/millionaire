@@ -26,21 +26,38 @@
                 <cmp-button class="button__1" inner="Начать" :clickF="null" :hoverSW="true"></cmp-button>
             </div>
 
-            <hr>
+            <hr v-if="dataBase.content.length > 0">
 
-            <div class="createQuestions__yourQbox">
+            <div v-if="dataBase.content.length > 0" class="createQuestions__yourQbox">
                 <h2 class="popup__title">Ваши вопросы:</h2>
-                <div v-for:="(item, index) in dataBase.content" class="createQuestions__yourQitem">
-                    <div class="yourQitem__num yourQitem"><p>{{index + 1}}</p></div>
-                    <div class="yourQitem">{{item.question.slice(0, 30) + '...'}}</div>
-                    <cmp-stars class="yourQitem" :selected="item.class"></cmp-stars>
-                    <cmp-button class="yourQitem" inner="Удалить" :clickF="null" :hoverSW="true"></cmp-button>
-                </div>
+                <table>
+                    <tbody>
+                        <tr v-for:="(item, index) in dataBase.content" class="createQuestions__yourQitem">
+                            <td>
+                                <div class="yourQitem__num yourQitem"><p>{{index + 1}}</p></div>
+                            </td>
+                            <td class="yourQitem__text yourQitem">{{item.question.slice(0, 30) + '...'}}</td>
+                            <td>
+                                <cmp-stars class="yourQitem" :selected="item.class"></cmp-stars>
+                            </td>
+                            <td>
+                                <cmp-button class="yourQitem" inner="Удалить" :clickF="deleteQitem(index)" :hoverSW="true"></cmp-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
 
         <div v-if="isMakeQ" class="popup popup__makeQuestion">
+
+            <div class="popup__closeIcon" @click="isCreateQ = true; isMakeQ = false">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 32 32">
+                    <title>отмена</title>
+                    <path d="M31.708 25.708c-0-0-0-0-0-0l-9.708-9.708 9.708-9.708c0-0 0-0 0-0 0.105-0.105 0.18-0.227 0.229-0.357 0.133-0.356 0.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13 0.048-0.252 0.124-0.357 0.228 0 0-0 0-0 0l-9.708 9.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057 0.229l-4.586 4.586c-0.286 0.286-0.361 0.702-0.229 1.057 0.049 0.13 0.124 0.252 0.229 0.357 0 0 0 0 0 0l9.708 9.708-9.708 9.708c-0 0-0 0-0 0-0.104 0.105-0.18 0.227-0.229 0.357-0.133 0.355-0.057 0.771 0.229 1.057l4.586 4.586c0.286 0.286 0.702 0.361 1.057 0.229 0.13-0.049 0.252-0.124 0.357-0.229 0-0 0-0 0-0l9.708-9.708 9.708 9.708c0 0 0 0 0 0 0.105 0.105 0.227 0.18 0.357 0.229 0.356 0.133 0.771 0.057 1.057-0.229l4.586-4.586c0.286-0.286 0.362-0.702 0.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z"></path>
+                </svg>
+            </div>
 
             <div class="makeQuestion__warn"><p id="makeQuestionWarn">{{makeQ.warn}}</p></div>
 
@@ -148,23 +165,7 @@
 
                 dataBase: {
                     title: 'Без категории',
-                    content: [
-
-                        {
-                            question: 'Вопрос ',
-                            answers: {
-                                A: 'a',
-                                B: 'b',
-                                C: 'c',
-                                D: 'd'
-                            },
-                            img: null,
-                            imgBuffer: null,
-                            right: 'D',
-                            class: 2,
-                        }
-
-                    ],
+                    content: [],
                 }
 
             }
@@ -259,6 +260,8 @@
 
                 this.dataBase.content.push(this.questionResult);
 
+                this.dataBase.content.sort( (a, b) => {return a.class - b.class} );
+
                 for (let i = 0; i < this.statisticTypeQuestions.length; i++) {
                     if (this.statisticTypeQuestions[i].type === this.questionResult.class) {
                         this.statisticTypeQuestions[i].done++;
@@ -284,6 +287,17 @@
 
                 console.log(this.dataBase);
 
+            },
+
+            deleteQitem (index) {
+                return () => {
+                    
+                    let arr1 = this.dataBase.content.slice(0, index);
+                    let arr2 = this.dataBase.content.slice(index + 1, this.dataBase.content.length);
+                    this.statisticTypeQuestions[this.dataBase.content[index].class - 1].done--;
+                    this.dataBase.content = arr1.concat(arr2);
+
+                }
             }
         }
 

@@ -102,6 +102,7 @@ img {
     max-width: 1180px;
     padding: 0 10px;
     margin: 0 auto;
+    // position: relative;
 }
 
 .whiteText {
@@ -127,8 +128,8 @@ img {
     position: absolute;
     padding: 0 40px;
     left: 50%;
-    top: 25%;
-    transform: translate(-50%, -50%);
+    top: 50px;
+    transform: translate(-50%);
 
     &__title {
         font-weight: 300;
@@ -205,6 +206,25 @@ img {
         right: 65px
     }
 
+    &__closeIcon {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        svg {
+            transition: $transition;
+        }
+
+        svg:hover {
+            opacity: 0.7;
+        }
+
+    }
+
 }
 
 .buttonDefault {
@@ -266,8 +286,6 @@ img {
     }
 
     .popup__mOpinion {
-
-        margin-top: 60px;
 
         .popup__content {
 
@@ -428,13 +446,14 @@ img {
 
 .popup__createQuestions {
 
-    margin-top: 80px;
-    // width: 500px;
-
     .button {
 
         &__1 {
             @include button (150px);
+        }
+
+        &__1:nth-child(1n+2) {
+            margin-left: 10px;
         }
 
     }
@@ -456,13 +475,20 @@ img {
 
         &__yourQbox {
             padding-bottom: 20px;
+
+            td {
+                padding: 5px;
+                vertical-align: middle;
+                // border: solid 1px #000;
+            }
+
         }
 
         &__yourQitem {
 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            // display: flex;
+            // justify-content: space-between;
+            // align-items: center;
 
             .yourQitem__num {
                 border: 1px solid $clB;
@@ -491,6 +517,10 @@ img {
             .yourQitem:nth-child(1n+2) {
                 margin-left: 10px;
             }
+
+            .yourQitem__text {
+                text-align: left;
+            }
         }
     }
 
@@ -499,7 +529,6 @@ img {
 
 .popup__makeQuestion {
 
-    margin-top: 150px;
     padding: 15px 40px;
 
     .button:nth-child(1n+2) {
