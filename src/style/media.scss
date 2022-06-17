@@ -49,6 +49,10 @@
         padding: 10px 20px;
     }
 
+    .game .popup__continue .button, .game .popup__gameEnd .button {
+        margin: 5px 10px;
+    }
+
     .popup__buttonsFX {
 
         flex-flow: column;
@@ -56,7 +60,7 @@
         align-items: center;
 
         .button {
-            margin: 0;
+            margin: 0px;
         }
 
     }
@@ -87,6 +91,10 @@
         .stars__wrapp {
             display: none;
         }
+    }
+
+    .popup__radio:checked + .popup__radioLable::before {
+        right: 45px;
     }
 
 }
